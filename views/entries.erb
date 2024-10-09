@@ -1,0 +1,5 @@
+<ul id="items" hx-get="/lists/<%= listId %>/entries" hx-swap="outerHTML" hx-trigger="every 2s">
+  <% entries.each do |e| %>
+    <%= erb :entry, layout: false, locals: {entry: e} %>
+  <% end %>
+</ul>

@@ -1,0 +1,8 @@
+<h1><%= list.name %></h1>
+
+<form hx-post="/lists/<%= list.id %>/entries" hx-swap="beforeend" hx-target="#items">
+<input name="entry[item]" type="text">
+<input type="submit"/>
+</form>
+
+<%= erb :entries, layout: false, locals: {entries: list.shopping_list_entries, listId: list.id} %>

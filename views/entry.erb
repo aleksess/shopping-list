@@ -1,0 +1,10 @@
+<li id="entry_<%= entry.id %>" hx-patch="/lists/<%= entry.shopping_list.id %>/entries/<%= entry.id %>" hx-target="#entry_<%= entry.id %>" hx-swap="outerHTML">
+  <% if entry.done %>
+    <s><%= entry.item %></s>
+  <% else %>
+    <%= entry.item %>
+  <% end %>
+  <button hx-delete="/lists/<%= entry.shopping_list.id %>/entries/<%= entry.id %>" hx-target="#entry_<%= entry.id %>" hx-swap="outerHTML"> Delete 
+  </button> 
+</li>
+
