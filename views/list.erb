@@ -1,8 +1,24 @@
 <h1><%= list.name %></h1>
 
+<button id="copy-url-button">Skopiuj link</button>
+<% unless list.saved %>
+  <button hx-patch="/lists/<%= list.id %>/save" hx-swap="outerHTML" hx-target="body">Zapisz</button>
 <form hx-post="/lists/<%= list.id %>/entries" hx-swap="beforeend" hx-target="#items">
-<input name="entry[item]" type="text">
-<input type="submit"/>
+  <label>Element: </label>
+  <input name="entry[item]" type="text" />
+  <label>Ilość (nieobowiązkowa): </label>
+  <input name="entry[amount]" type="number"/>
+  <input type="submit"/>
 </form>
+<% end %>
 
 <%= erb :entries, layout: false, locals: {entries: list.shopping_list_entries, listId: list.id} %>
+
+<script>
+  function CopyUrl() {
+    navigator.clipboard.writeText(window.location.href);
+    alert("Skopiowano link do listy");
+  }
+
+  document.getElementById("copy-url-button").addEventListener("click", CopyUrl);
+</script>

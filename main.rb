@@ -25,12 +25,10 @@ end
 get '/lists/:id/entries' do
   shopping_list = ShoppingList.find(params[:id])
 
-
   erb :entries, layout: false, locals: { entries: shopping_list.shopping_list_entries, listId: shopping_list.id }
 rescue ActiveRecord::RecordNotFound
   404
 end
-
 
 post '/lists/:id/entries' do
   shopping_list = ShoppingList.find(params[:id])
@@ -60,10 +58,20 @@ rescue ActiveRecord::RecordNotFound
   404
 end
 
+patch '/lists/:listId/save' do
+  shopping_list = ShoppingList.find(params[:listId])
+  shopping_list.saved = true
+  shopping_list.save
+
+  redirect to("/#{shopping_list.id}")
+rescue ActiveRecord::RecordNotFound
+  404
+end
+
 delete '/lists/:listId/entries/:id' do
   shopping_list = ShoppingList.find(params[:listId])
 
-  entry = shopping_list.shopping_list_entries.destroy params[:id]
+  shopping_list.shopping_list_entries.destroy params[:id]
 
   200
 rescue ActiveRecord::RecordNotFound
